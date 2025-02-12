@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Custom URL Shortener</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+</head>
+<body>
+    <main class="container">
+        <h2>Custom URL Shortener</h2>
+        <form method="POST">
+            <input type="url" name="url" placeholder="Enter URL" required>
+            <input type="text" name="title" placeholder="Custom Title (Optional)">
+            <input type="text" name="custom_short" placeholder="Custom Short URL (Optional)">
+            <button type="submit">Shorten</button>
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p style="color: red;">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if short_url %}
+            <p><strong>{{ title }}</strong></p>
+            <p>Shortened URL: <a href="{{ short_url }}">{{ request.host_url }}{{ short_url }}</a></p>
+        {% endif %}
+    </main>
+</body>
+</html>
